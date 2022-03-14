@@ -1,0 +1,6 @@
+{
+  "entryPoint": [
+    "src"
+  ],
+  "out": "./docs"
+}

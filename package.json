@@ -1,0 +1,27 @@
+{
+  "name": "practica_5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "chai": "^4.3.6",
+    "eslint": "^8.11.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^9.2.2",
+    "ts-node": "^10.7.0",
+    "tsc-watch": "^4.6.2"
+  },
+  "dependencies": {
+    "typedoc": "^0.22.13"
+  }
+}
