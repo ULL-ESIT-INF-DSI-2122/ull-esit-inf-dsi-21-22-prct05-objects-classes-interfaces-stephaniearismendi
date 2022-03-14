@@ -5,16 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start1": "tsc-watch --onSuccess \"node dist/ejercicio-1.js\"",
-    "start2": "tsc-watch --onSuccess \"node dist/ejercicio-2.js\"",
-    "start3": "tsc-watch --onSuccess \"node dist/ejercicio-3.js\"",
-    "start4": "tsc-watch --onSuccess \"node dist/ejercicio-4.js\"",
-    "start5": "tsc-watch --onSuccess \"node dist/ejercicio-5.js\"",
-    "start6": "tsc-watch --onSuccess \"node dist/ejercicio-6.js\"",
-    "start7": "tsc-watch --onSuccess \"node dist/ejercicio-7.js\"",
-    "start8": "tsc-watch --onSuccess \"node dist/ejercicio-8.js\"",
-    "start9": "tsc-watch --onSuccess \"node dist/ejercicio-9.js\"",
-    "start10": "tsc-watch --onSuccess \"node dist/ejercicio-10.js\"",
+    "start1": "tsc-watch --onSuccess \"node dist/ejercicio-1/index.js\"",
     "doc": "typedoc",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
