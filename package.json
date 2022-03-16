@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha",
     "start1": "tsc-watch --onSuccess \"node dist/ejercicio-1/index.js\"",
+    "start2": "tsc-watch --onSuccess \"node dist/ejercicio-clase/index.js\"",
     "doc": "typedoc",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
