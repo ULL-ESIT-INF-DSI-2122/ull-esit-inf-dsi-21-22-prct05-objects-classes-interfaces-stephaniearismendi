@@ -22,6 +22,11 @@ export class Tablero {
       [' ', ' ', ' ', ' ', ' ', ' ', ' '],
     ];
   }
+  /**
+   * Función que comprueba si hay alguna posición vacía en la columna seleccionada
+   * @param position
+   * @returns
+   */
   public isColumnFull(position:number):boolean {
     let resultado:boolean = true;
     for (let i = 0; i < this.nfilas_; i++) {
@@ -54,7 +59,10 @@ export class Tablero {
     }
     return resultado;
   }
-
+  /**
+ * Función que comprueba si hay 4 fichas seguidas, del mismo signo, verticalmente
+ * @returns
+ */
   public checkVertical():boolean {
     let resultado:boolean = false;
     let consecutivas:number = 0;
@@ -74,7 +82,12 @@ export class Tablero {
     }
     return resultado;
   }
-
+  /**
+ * Función que introduce una ficha en el tablero, buscando una posición vacía ascendentemente
+ * @param columna
+ * @param jugador
+ * @returns
+ */
   public colocarColumna(columna:number, jugador:Jugador):string {
     const mensaje:string = 'Ficha añadida';
     const mensajeLleno:string = 'Columna llena';
@@ -92,6 +105,9 @@ export class Tablero {
       return mensaje;
     }
   }
+  /**
+   * función para imprimir el tablero
+   */
   public print():void {
     let arrText:Cell = ' ';
     for (let i = 0; i < this.boardState.length; i++) {

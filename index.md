@@ -235,3 +235,202 @@ Finalmente tenemos la función `start`, que es la que se encargará de monitoriz
 
 ### Ejercicio 2 - Conecta 4
 
+Todos (o casi todos) hemos jugado alguna vez al Conecta 4.
+
+En una rejilla de `6 filas` y `7 columnas`, dos jugadores se turnan para ir colocando un conjunto de fichas dejándolas caer por alguna de las siete columnas de la rejilla. Cada jugador dispone de un total de ``21 fichas`` de un color diferente.
+
+En cada turno, una ficha tomará la primera posición libre de la columna seleccionada por el jugador que corresponda. Si la columna está completa, esto es, ya cuenta con seis fichas, dicha columna no podrá ser seleccionada por ninguno de los dos jugadores para dejar caer otra ficha.
+
+**El objetivo del jugador es colocar cuatro fichas consecutivas ya sea en una misma fila, una misma columna o en diagonal.**
+
+Cree la jerarquía de clases e interfaces necesarias para implementar el juego Conecta 4, teniendo en cuenta la siguiente funcionalidad:
+
+- El juego comienza con el Jugador 1 colocando la primera ficha y, en turnos sucesivos, debe ir alternándose con el Jugador 2. Se deberá mostrar por consola a qué jugador le toca colocar una ficha.
+
+- Si un jugador intenta colocar una ficha en una columna completa, se mostrará un mensaje informando de que la columna está completa y se le permitirá seleccionar otra columna para colocar la ficha. Lo anterior debe repetirse hasta que el jugador coloque su ficha.
+
+- Una vez que el jugador correspondiente haya colocado una ficha, debe mostrarse por la consola el estado del tablero.
+
+- Cuando alguno de los dos jugadores gane, se debe informar de lo anterior en la consola y terminar el juego.
+
+Primero creamos una clase ``Jugador``, que contendrá el número de fichasy el simbolo del jugador. ``Fichas`` siempre será 21 (inicialmente), mientras que simbolo se declarara en el constructor. Además, ``simbolo`` es del tipo `Cell`.
+
+```typescript
+export type Cell = 'X' | 'O' | ' ';
+```
+
+La clase `Jugador` sigue el siguiente esquema:
+
+```typescript
+class Jugador {
+  private simbolo:Cell;
+  private fichas:number = 21;
+  constructor(simbolo:Cell) {
+    this.simbolo = simbolo;
+  }
+  public getSimbolo():Cell {
+    return this.simbolo;
+  }
+  public fichaMenos():void {
+    this.fichas--;
+  }
+  public getNumFichas():number {
+    return this.fichas;
+  }
+}
+```
+
+Luego, en la clase `Tablero` declaramos, también, el tipo `Board`:
+
+```typescript
+
+type Board = [
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell],
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell],
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell],
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell],
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell],
+[Cell, Cell, Cell, Cell, Cell, Cell, Cell]];
+
+```
+
+Esto se utilizarápara crear el tablero, que se declara en el constructor. 
+
+```typescript
+
+export class Tablero {
+  private ncolumnas_ = 7;
+  private nfilas_ = 6;
+  private boardState:Board;
+  constructor() {
+    this.boardState = [
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    ];
+  }
+```
+
+Además, también se declara el número de filas y de columnas, que son 6 y 7 respectivamente.
+
+Para comprobar si una columna está llena, tendremos la función `isColumnFull`. Esta recorre toda la columna, recibida como parametro, y devuelve false si hay aunque sea un hueco vacío.
+
+```typescript
+
+isColumnFull(position:number):boolean {
+    let resultado:boolean = true;
+    for (let i = 0; i < this.nfilas_; i++) {
+      if (this.boardState[i][position] == ' ') {
+        resultado = false;
+      }
+    }
+    return resultado;
+  }
+
+```
+
+Luego, tenemos la fuunción `colocarColumna`, que recibe una posición de columna y un objeto `Jugador`. Si la columna está llena se devuelve un mensaje, "Columna llena"; en cambio, si hay alguna posición vacía, introduce una ficha en la misma. La columna la recorre de abajo hacia arriba.
+
+```typescript
+
+colocarColumna(columna:number, jugador:Jugador):string {
+    const mensaje:string = 'Ficha añadida';
+    const mensajeLleno:string = 'Columna llena';
+    if (!this.isColumnFull(columna)) {
+      for (let i = (this.nfilas_ - 1); i >= 0; i--) {
+        if (this.boardState[i][columna] == ' ') {
+          this.boardState[i][columna] = jugador.getSimbolo();
+          i = 0;
+        }
+      }
+    }
+    if (this.isColumnFull(columna)) {
+      return mensajeLleno;
+    } else {
+      return mensaje;
+    }
+  }
+
+```
+
+También tenemos las funciones `checkHorizontal` y `checkVertical`, que comprueban si hay un cuatro en raya en una fila o columna respectivamente.
+
+La primera, `checkHorizontal`, recorre el tablero fila a fila, y cada vez que el simbolo de la ficha actual y la de la ficha siguiente sea el mismo se sumará uno a la variable `consecutiva`. En caso contrario, se restablece a cero.
+
+Al final, si `consecutivas` es mayor o igual a tres (ya que no cuenta la propia ficha), resutlado retornará true.
+
+```typescript
+
+  public checkHorizontal():boolean {
+    let resultado:boolean = false;
+    let consecutivas:number = 0;
+    for (let i = 0; i < this.nfilas_; i++) {
+      for (let j = 0; j < this.ncolumnas_; j++) {
+        if (this.boardState[i][j] != ' ' && this.boardState[i][(j + 1)] != ' ') {
+          if (this.boardState[i][j] == this.boardState[(i)][(j+1)]) {
+            consecutivas++;
+            if (consecutivas >= 3) { // es 3 porque son 4 contando la propia ficha
+              resultado = true;
+            }
+          } else {
+            consecutivas = 0;
+          }
+        }
+      }
+    }
+    return resultado;
+  }
+
+```
+
+En `checkVertical` se comprueba de igual manera, con el único cambio de que lo que se va iterando son las columnas.
+
+```typescript
+
+  public checkVertical():boolean {
+    let resultado:boolean = false;
+    let consecutivas:number = 0;
+    for (let i = 0; i < this.ncolumnas_; i++) {
+      for (let j = 0; j < this.nfilas_; j++) {
+        if ((this.boardState[j][i] != ' ') && (this.boardState[(j)][i] != ' ') && ((j+1) < this.nfilas_)) {
+          if (this.boardState[j][i] == this.boardState[(j + 1)][i]) {
+            consecutivas++;
+            if (consecutivas >= 3) { // es 3 porque son 4 contando la propia ficha
+              resultado = true;
+            }
+          } else {
+            consecutivas = 0;
+          }
+        }
+      }
+    }
+    return resultado;
+  }
+
+```
+
+Finalmente, con `print` se imprimirá el tablero y sus respectivos símbolos.
+
+```typescript
+
+  public print():void {
+    let arrText:Cell = ' ';
+    for (let i = 0; i < this.boardState.length; i++) {
+      for (let j = 0; j < this.boardState[i].length; j++) {
+        arrText += this.boardState[i][j] + ' ';
+      }
+      console.log(arrText);
+      arrText=' ';
+    }
+  }
+
+```
+
+Luego, estas funciones son alternadas dentro de `index.ts` para el funcionamiento del juego. Mientras las fichas del primer jugador y las del segundo sean mayor que cero, y tampoco haya algún cuatro en raya, se pedirá por pantalla a cada jugador una columna en la que introducir una ficha. Si la elegida está llena, no dejará avanzar hasta que el mismo jugador escoja otra columna. Seguidamente, la introducirá en el tablero y descontará una ficha al jugador. 
+
+El turno del jugador finaliza imprimiendo el tablero y, de haber algún cuatro en raya, se notificará que ha ganado.
+
+Se repite lo mismo para el segundo jugador, y continúa hasta que alguno de los dos gane o se quede sin fichas.
