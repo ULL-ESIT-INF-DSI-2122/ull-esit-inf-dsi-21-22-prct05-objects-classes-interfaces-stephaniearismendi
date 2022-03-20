@@ -124,3 +124,114 @@ Lo mismo con `comprobar_debilitado` y `comprobar_ps`, que sirven para comprobar 
     }
   }
 ```
+
+Las siguientes funciones son las implementadas en una práctica anterior, reutilizadas en esta ocasión. Estas son `pokemonBattle` y `damage`, que van de la mano. La primera valora, con una serie de switches, los diferentes escenarios del pokémon atacante respecto al defensor. Según sus tipos, llama a la función `damage` y, con la formula, calcula el daño total causado.
+
+```typescript
+ public pokemonBattle(myType:string, theirType:string,
+      myAttack:number, theirDefense:number):number {
+    let totalDamage = 0;
+    switch (myType) {
+      case 'fuego': {
+        switch (theirType) {
+          case 'fuego': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+          case 'agua': {
+            totalDamage = this.damage(myAttack, theirDefense, 0.5);
+            break;
+          }
+          case 'planta': {
+            totalDamage = this.damage(myAttack, theirDefense, 2);
+            break;
+          }
+          case 'electrico': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+        }
+        break;
+      }
+      case 'agua': {
+        switch (theirType) {
+          case 'fuego': {
+            totalDamage = this.damage(myAttack, theirDefense, 2);
+            break;
+          }
+          case 'agua': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+          case 'planta': {
+            totalDamage = this.damage(myAttack, theirDefense, 0.5);
+            break;
+          }
+          case 'electrico': {
+            totalDamage = this.damage(myAttack, theirDefense, 0.5);
+            break;
+          }
+        }
+        break;
+      }
+      case 'planta': {
+        switch (theirType) {
+          case 'fuego': {
+            totalDamage = this.damage(myAttack, theirDefense, 0.5);
+            break;
+          }
+          case 'agua': {
+            totalDamage = this.damage(myAttack, theirDefense, 2);
+            break;
+          }
+          case 'planta': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+          case 'electrico': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+        }
+        break;
+      }
+      case 'electrico': {
+        switch (theirType) {
+          case 'fuego': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+          case 'agua': {
+            totalDamage = this.damage(myAttack, theirDefense, 2);
+            break;
+          }
+          case 'planta': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+          case 'electrico': {
+            totalDamage = this.damage(myAttack, theirDefense, 1);
+            break;
+          }
+        }
+        break;
+      }
+    }
+    return Number(Math.round(totalDamage));
+  }
+```
+
+```typescript
+  public damage(attack:number, defense:number, effectiveness:number):number {
+    let totalDamage:number = 0;
+    totalDamage = 50 * (attack / defense) * effectiveness;
+    return totalDamage;
+  }
+```
+
+Finalmente tenemos la función `start`, que es la que se encargará de monitorizar el combate y hacer uso de las diferentes funciones implementadas. Esto se repetirá mientras nuestro pokémon y el de nuestro rival continúen con vida. De resto, van realizando ataques y restándoselo a su salud inicial hasta que uno caiga debilitado.
+
+> La Pokédex está implementada como un array de *Pokémones*, donde se guardarán con todos sus datos. Al comenzar el combate se mostrará una tabla con toda la información de la misma, y los pokémon disponibles. Además, se borra de la lista al pokémon aleatorio elegido para el rival.
+
+### Ejercicio 2 - Conecta 4
+
