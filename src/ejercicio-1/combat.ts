@@ -13,6 +13,9 @@ export class Combat {
     this.pokemon1 = pokemon1;
     this.pokemon2 = pokemon2;
   }
+  /**
+   * Función que comienza el combate pokémon y en la que se desarrolla el mismo
+   */
   public start() {
     console.log('¡El entrenador Berto te desafía!');
     console.log('Entrenador Berto ha sacado a ' + this.pokemon2.get_name());
@@ -37,6 +40,10 @@ export class Combat {
       }
     }
   }
+  /**
+   * Función que devuelve un ataque aleatorio dependiendo del tipo del pokémon.
+   * Recibe un objeto pokémon.
+   */
   public ataque_aleatorio(pokemon:Pokemon):string {
     let ataque:string = '';
     const rand = Math.floor(Math.random()* 4);
@@ -51,6 +58,12 @@ export class Combat {
     }
     return ataque;
   }
+  /**
+   * función auxiliar para el texto del combate. según la tabla de tipos muestra un texto u otro.
+   * @param pokemon1
+   * @param pokemon2
+   * @returns
+   */
   public eficacia(pokemon1:Pokemon, pokemon2:Pokemon):string {
     let eficacia:string = '';
     if (pokemon1.type == 'agua' && pokemon2.type == 'fuego') {
@@ -74,12 +87,29 @@ export class Combat {
     }
     return eficacia;
   }
+  /**
+   * función que nos ayuda a calcular, con la formula, el daño realizado por el
+   * ataque de nuestro pokémon (o el del rival)
+   * @param attack
+   * @param defense
+   * @param effectiveness
+   * @returns
+   */
   public damage(attack:number, defense:number, effectiveness:number):number {
     let totalDamage:number = 0;
     totalDamage = 50 * (attack / defense) * effectiveness;
     return totalDamage;
   }
 
+  /**
+ * Función con diferentes switchs que, según el tipo de nuestro pokémon y el del rival,
+ * va calculando el daño recibido u ocasionado.
+ * @param myType
+ * @param theirType
+ * @param myAttack
+ * @param theirDefense
+ * @returns
+ */
   public pokemonBattle(myType:string, theirType:string,
       myAttack:number, theirDefense:number):number {
     let totalDamage = 0;
@@ -171,6 +201,10 @@ export class Combat {
     }
     return Number(Math.round(totalDamage));
   }
+  /**
+   * Función que comprueba si un pokémon se ha debilitado (sus ps son cero o menos)
+   * @returns true or false (boolean)
+   */
   public comprobar_debilitado():boolean {
     let debilitado:boolean = false;
     if (this.pokemon1.get_hp() <= 0) {
@@ -182,6 +216,10 @@ export class Combat {
     }
     return debilitado;
   }
+  /**
+   * función auxiliar que nos ayuda a llevar el control del número de ps que les quedan
+   * a nuestros pokémon en el combate
+   */
   public comprobar_ps() {
     if (this.pokemon1.get_hp() > 0) {
       console.log('A ' + this.pokemon1.get_name() +
