@@ -434,3 +434,41 @@ Luego, estas funciones son alternadas dentro de `index.ts` para el funcionamient
 El turno del jugador finaliza imprimiendo el tablero y, de haber algún cuatro en raya, se notificará que ha ganado.
 
 Se repite lo mismo para el segundo jugador, y continúa hasta que alguno de los dos gane o se quede sin fichas.
+
+### Pruebas
+
+Se han realizado unas series de pruebas con **Mocha** y **Chai** para comprobar el funcionamiento de los distintos métodos. Estás podrán encontrarse en el [repositorio](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct05-objects-classes-interfaces-stephaniearismendi/tree/master/test)
+
+La salida por pantalla es la siguiente:
+
+```terminal
+
+  Pokémon tests: 
+    ✔ Ataque aleatorio debe devolver una cadena
+    ✔ Pikachu (electrico) vs Squirtle (agua) -> ¡Es muy eficaz!
+    ✔ damage attack 50, defense 90, efectiveness 1 must be 0.5
+    ✔ electrico vs agua 50 50 must be 100
+    ✔ Comprobar si algún pokémon está debilitado -> true
+
+  Tres en raya tests: 
+    ✔ Prueba getSimbolo -> "X"
+    ✔ Prueba getSimbolo -> "O"
+    ✔ Prueba isColumnFull -> false (porque inicialmente está vacío)
+    ✔ Prueba CheckHorizontal -> false
+    ✔ Prueba ColocarColumna -> Si añade la ficha, retorna ficha añadida
+    ✔ Prueba checkVertical -> false
+    ✔ Prueba print. Debe imprimir undefined.
+    ✔ Prueba fichaMenos -> expect to decrease 
+
+  Racionales function tests: 
+    ✔ 15/3 simplificado retorna 5/1
+    ✔ 15/3 + 2/5 = 27/5
+    ✔ 15/3 - 2/5 = 23/5
+    ✔ 15/3 * 2/5 = 30/15
+    ✔ 15/3 / 2/5 = 25/2
+    ✔ 15/3 = 3/15
+    ✔ 15/0 should be invalid
+    ✔ 15/3 should be valid
+
+  21 passing (29ms)
+```

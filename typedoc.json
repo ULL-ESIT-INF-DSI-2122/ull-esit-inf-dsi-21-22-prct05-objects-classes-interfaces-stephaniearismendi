@@ -1,6 +1,11 @@
 {
   "entryPoints": [
-    "./src/ejercicio-clase/Racionales.ts"
+    "./src/ejercicio-clase/Racionales.ts",
+    "./src/ejercicio-1/combat.ts",
+    "./src/ejercicio-1/Pokemon.ts",
+    "./src/ejercicio-2/jugador.ts",
+    "./src/ejercicio-2/tablero.ts",
+    "./src/ejercicio-2/index.ts"
   ],
   "out": "./docs"
 }
